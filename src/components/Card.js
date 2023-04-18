@@ -1,7 +1,11 @@
-export default function ElementTemplate(props) {
+export default function Card(props) {
+    function handleClick() {
+        props.onCardClick(props.card);
+      } 
+      
     return (
         <li className="element" key={props.card._id}>
-            <img className="element__photo" src={props.card.link}/>
+            <img className="element__photo" src={props.card.link} onClick={handleClick}/>
             <button className="element_delete_button"></button>
             <div className="element__rectangle">
                 <h2 className="element__title">{props.card.name}</h2>

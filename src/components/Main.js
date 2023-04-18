@@ -1,10 +1,8 @@
 import avatar from '../images/loading.gif'
 
-import ElementTemplate from './ElementTemplate'
+import Card from './Card'
 
 import PopupWithForm from './PopupWithForm'
-
-import PopupImage from './PopupImage'
 
 import React from 'react'
 
@@ -43,12 +41,11 @@ function Main(props) {
         <section className="elements" aria-label="places">
           <ul className="elements__list">
             {cardsList.map((card) => (
-              <ElementTemplate card={card}/>
+              <Card card={card} onCardClick={props.onCardClick}/>
             ))}
           </ul>
         </section>
         <PopupWithForm title="Вы уверены?" name="delete-image" buttonText="Да"/>
-        <PopupImage/>
       </main>
   )
 }
