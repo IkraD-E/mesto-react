@@ -1,17 +1,15 @@
-export default function ElementTemplate() {
+export default function ElementTemplate(props) {
     return (
-        <template id="element-template">
-            <li className="element">
-                <img className="element__photo"/>
-                <button className="element_delete_button"></button>
-                <div className="element__rectangle">
-                    <h2 className="element__title"></h2>
-                    <div className="button-container">
-                        <button className="element__like-btn" type="button"></button>
-                        <p className="button-container__count">0</p>
-                    </div>
+        <li className="element" key={props.card._id}>
+            <img className="element__photo" src={props.card.link}/>
+            <button className="element_delete_button"></button>
+            <div className="element__rectangle">
+                <h2 className="element__title">{props.card.name}</h2>
+                <div className="button-container">
+                    <button className="element__like-btn" type="button"></button>
+                    <p className="button-container__count">0</p>
                 </div>
-            </li>
-        </template>
+            </div>
+        </li>
     )
 }
