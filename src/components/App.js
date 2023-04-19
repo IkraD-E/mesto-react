@@ -5,7 +5,7 @@ import PopupWithForm from './PopupWithForm'
 import PopupAddPlaceInputs from './popups/PopupAddPlaceInputs'
 import PopupChangeAvatarInputs from './popups/PopupChangeAvatarInputs'
 import PopupChangeProfileInputs from './popups/PopupChangeProfileInputs'
-import PopupImage from './PopupImage'
+import ImagePopup from './ImagePopup'
 import React from "react";
 
 function App() {
@@ -71,7 +71,7 @@ function App() {
           isOpen={isEditAvatarPopupOpen} 
           onClose={closeAllPopups}
         />
-        <PopupImage 
+        <ImagePopup 
           card={selectedCard} 
           onClose={closeAllPopups}
         />

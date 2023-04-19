@@ -1,4 +1,4 @@
-export default function PopupImage(props) {
+export default function ImagePopup(props) {
     return (
         <div className={`popup popup_type_image ${props.card && "popup_opened"}`} id="popup__image">
             <figure className="popup__figure">
