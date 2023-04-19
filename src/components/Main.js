@@ -1,10 +1,9 @@
 import Card from './Card'
-import PopupWithForm from './PopupWithForm'
 import React from 'react'
 import { api } from '../utils/Api'
 
 function Main(props) {
-  const [userData, setUserData] = React.useState("");
+  const [userData, setUserData] = React.useState({});
   const [cardsList, setCards] = React.useState([]);
 
   React.useEffect(() => {
@@ -39,15 +38,11 @@ function Main(props) {
               <Card 
                 card={card} 
                 onCardClick={props.onCardClick}
+                key={card._id}
               />
             ))}
           </ul>
         </section>
-        <PopupWithForm 
-          title="Вы уверены?" 
-          name="delete-image" 
-          buttonText="Да"
-        />
       </main>
   )
 }

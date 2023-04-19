@@ -12,94 +12,109 @@ class Api{
         this._headers = headers;
     }
 
-    _serverResponse(res){
+    _checkResponse(res) {
         if (res.ok) {
             return res.json()
         }
             return Promise.reject(res.status)
-        }
+    }
 
+    _request(url, options) {
+        return fetch(url, options).then(this._checkResponse)
+    }
 
     //Сбор информации о пользователе
     getUserDataFromServer() {
-        return fetch(`${this._link}users/me`, {
-            headers: this._headers
-        })
-            .then(res => this._serverResponse(res))
+        return this._request(
+            `${this._link}users/me`, 
+            {headers: this._headers}
+        );
     }
 
     //Сбор информации о карточках
     getCardFromServer() {
-        return fetch(`${this._link}cards`, {
-            headers: this._headers
-        })
-            .then(res => this._serverResponse(res))
+        return this._request(
+            `${this._link}cards`, 
+            {headers: this._headers}
+        );
     }
 
     //Добавление карточки на сервер
     addNewPlaceToServer(placeName, placeLink) {
-        return fetch(`${this._link}cards`, {
-            method: 'POST',
-            body: JSON.stringify({
-                name: placeName,
-                link: placeLink
-            }),
-            headers: this._headers
-        })
-            .then(res => this._serverResponse(res))
+        return this._request(
+            `${this._link}cards`, 
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: placeName,
+                    link: placeLink
+                }),
+                headers: this._headers
+            }
+        );
     }
 
     //Удаление карточки с сервера
     deleteCardFromServer(cardId) {
-        return fetch(`${this._link}cards/${cardId}`, {
-            method: 'DELETE',
-            headers: this._headers
-        })
-            .then(res => this._serverResponse(res))
+        return this._request(
+            `${this._link}cards/${cardId}`, 
+            {
+                method: 'DELETE',
+                headers: this._headers
+            }
+        );
     }
 
     //Изменить данные о пользователе на сервере
     changeServerUserInfo(data) {
-        return fetch(`${this._link}users/me`, {
-            method: 'PATCH',
-            body: JSON.stringify({
-                name: data.name,
-                about: data.info
-            }),
-            headers: this._headers
-        })
-            .then(res => this._serverResponse(res))
+        return this._request(
+            `${this._link}users/me`, 
+            {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    name: data.name,
+                    about: data.info
+                }),
+                headers: this._headers
+            }
+        );
     }
 
     //Добавить лайк на сервер
     handleAddLike(cardId) {
-        return fetch(`${this._link}cards/${cardId}/likes`, {
-            method: 'PUT',
-            headers: this._headers
-    
-        })
-            .then(res => this._serverResponse(res))
+        return this._request(
+            `${this._link}cards/${cardId}/likes`, 
+            {
+                method: 'PUT',
+                headers: this._headers
+        
+            }
+        );
     }
 
     //Убрать лайк с сервера
     handleDeleteLike(cardId) {
-        return fetch(`${this._link}cards/${cardId}/likes`, {
-            method: 'DELETE',
-            headers: this._headers
-    
-        })
-        .then(res => this._serverResponse(res))
+        return this._request(
+            `${this._link}cards/${cardId}/likes`, 
+            {
+                method: 'DELETE',
+                headers: this._headers
+        
+            }
+        );
     }
 
     handleChangeAvatar(newAvatarLink) {
-        return fetch(`${this._link}/users/me/avatar`, {
-            method: 'PATCH',
-            body: JSON.stringify({
-                avatar: newAvatarLink
-            }),
-            headers: this._headers
-        })
-            .then(res => this._serverResponse(res))
+        return this._request(
+            `${this._link}/users/me/avatar`, 
+            {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    avatar: newAvatarLink
+                }),
+                headers: this._headers
+            }
+        );
     }
 }
 
