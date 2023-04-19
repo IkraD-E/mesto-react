@@ -1,11 +1,6 @@
-import avatar from '../images/loading.gif'
-
 import Card from './Card'
-
 import PopupWithForm from './PopupWithForm'
-
 import React from 'react'
-
 import { api } from '../utils/Api'
 
 function Main(props) {
@@ -41,11 +36,18 @@ function Main(props) {
         <section className="elements" aria-label="places">
           <ul className="elements__list">
             {cardsList.map((card) => (
-              <Card card={card} onCardClick={props.onCardClick}/>
+              <Card 
+                card={card} 
+                onCardClick={props.onCardClick}
+              />
             ))}
           </ul>
         </section>
-        <PopupWithForm title="Вы уверены?" name="delete-image" buttonText="Да"/>
+        <PopupWithForm 
+          title="Вы уверены?" 
+          name="delete-image" 
+          buttonText="Да"
+        />
       </main>
   )
 }

@@ -1,19 +1,11 @@
 import Header from './Header'
-
 import Main from './Main'
-
 import Footer from './Footer'
-
 import PopupWithForm from './PopupWithForm'
-
 import PopupAddPlaceInputs from './popups/PopupAddPlaceInputs'
-
 import PopupChangeAvatarInputs from './popups/PopupChangeAvatarInputs'
-
 import PopupChangeProfileInputs from './popups/PopupChangeProfileInputs'
-
 import PopupImage from './PopupImage'
-
 import React from "react";
 
 function App() {
@@ -52,7 +44,8 @@ function App() {
           onEditProfile={handleEditProfileClick} 
           onAddPlace={handleAddPlaceClick} 
           onEditAvatar={handleEditAvatarClick} 
-          onCardClick={handleCardClick}/>
+          onCardClick={handleCardClick}
+        />
         <Footer/>
         <PopupWithForm 
           title="Редактировать профиль" 
@@ -60,24 +53,28 @@ function App() {
           buttonText="Сохранить" 
           children={PopupChangeProfileInputs()} 
           isOpen={isEditProfilePopupOpen} 
-          onClose={closeAllPopups}/>
+          onClose={closeAllPopups}
+        />
         <PopupWithForm 
           title="Новое место" 
           name="add-place" 
           buttonText="Создать" 
           children={PopupAddPlaceInputs()} 
           isOpen={isAddPlacePopupOpen} 
-          onClose={closeAllPopups}/>
+          onClose={closeAllPopups}
+        />
         <PopupWithForm 
           title="Обновить аватар" 
           name="change-avatar" 
           buttonText="Сохранить" 
           children={PopupChangeAvatarInputs()}
           isOpen={isEditAvatarPopupOpen} 
-          onClose={closeAllPopups}/>
+          onClose={closeAllPopups}
+        />
         <PopupImage 
           card={selectedCard} 
-          onClose={closeAllPopups}/>
+          onClose={closeAllPopups}
+        />
       </div>
     </div>
   );

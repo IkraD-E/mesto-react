@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Проект: Место
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Обзор
 
-## Available Scripts
+* Интро
+* Техники и технологи
 
-In the project directory, you can run:
+**Интро**
 
-### `npm start`
+Здесь находится проект, в котором можно редактировать введённые текстовые блоки через отдельное окно.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Страница корректно отображается на устройствах от 320px и подстраивается под разрешение экрана.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Техники и технологи**
 
-### `npm test`
+Вёрстка страници осуществлена по макету из Figma.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Верстка
 
-### `npm run build`
+Адаптивная вёрстка выполнена с помощью "media" запросов и использованием относительных размеров.
+Также были использованы Flex и Grid блоки для адаптивности содержимого сайта.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Изображения оптимизированы для уменьшения размеров проекта и скорости загрузки страниц.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Структура проекта сделана по методологии БЭМ.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Скрипты
 
-### `npm run eject`
+Взаимодействие пользователя со страницей осуществляется через JavaScript.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Код JavaScript сделан с использованием классов, их методов и разбит на разные файлы для упрощения понимания рабочего кода.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Код создания карт и валидации вынесены в отдельные файлы с классами, импортируемые в основной файл.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Блоки с которыми можно взаимодействовать реагируют на курсор изменяя свою прозрачность и вид курсора.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Имеется возможность редактировать текстовое содержимое профиля, добавлять новые карточки и открывать картинки в большем разрешении чем на главной странице.
 
-## Learn More
+Введённые данные валидируются.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+При вводе некорректных данных в поля ввода конопки подтверждения блокируются, поля выделяются характерным цветом, и под ними появляются сообщения объясняющие, в чём ошибка.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Server**
 
-### Code Splitting
+Изображения и информация о пользователе сохраняется на сервере и также сохраняется на нём.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Webpapck**
 
-### Analyzing the Bundle Size
+С помощью него написанный код оптимизируется и его можно запускать в большенстве браузерах не получая ошибки. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Планы**
 
-### Making a Progressive Web App
+*Добавить возможность и изменять изображения 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+*Добавить реакцию картинок на курсор
 
-### Advanced Configuration
+**Проектная страница**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Посмотреть страницу можно перейдя по ссылке: [Github.io](https://ikrad-e.github.io/mesto/)
