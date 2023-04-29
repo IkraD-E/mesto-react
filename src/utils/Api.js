@@ -66,14 +66,14 @@ class Api{
     }
 
     //Изменить данные о пользователе на сервере
-    changeServerUserInfo(data) {
+    setUserInfo(data) {
         return this._request(
             `${this._link}users/me`, 
             {
                 method: 'PATCH',
                 body: JSON.stringify({
                     name: data.name,
-                    about: data.info
+                    about: data.about
                 }),
                 headers: this._headers
             }
@@ -81,23 +81,12 @@ class Api{
     }
 
     //Добавить лайк на сервер
-    handleAddLike(cardId) {
-        return this._request(
-            `${this._link}cards/${cardId}/likes`, 
-            {
-                method: 'PUT',
-                headers: this._headers
-        
-            }
-        );
-    }
-
     //Убрать лайк с сервера
-    handleDeleteLike(cardId) {
+    changeLikeCardStatus(cardId, isLiked) {
         return this._request(
             `${this._link}cards/${cardId}/likes`, 
             {
-                method: 'DELETE',
+                method: isLiked ? 'DELETE' : 'PUT',
                 headers: this._headers
         
             }
