@@ -40,14 +40,14 @@ class Api{
     }
 
     //Добавление карточки на сервер
-    addNewPlaceToServer(placeName, placeLink) {
+    addNewPlaceToServer({name, link}) {
         return this._request(
             `${this._link}cards`, 
             {
                 method: 'POST',
                 body: JSON.stringify({
-                    name: placeName,
-                    link: placeLink
+                    name: name,
+                    link: link
                 }),
                 headers: this._headers
             }
@@ -94,13 +94,12 @@ class Api{
     }
 
     handleChangeAvatar(newAvatarLink) {
+        console.log(newAvatarLink);
         return this._request(
             `${this._link}/users/me/avatar`, 
             {
                 method: 'PATCH',
-                body: JSON.stringify({
-                    avatar: newAvatarLink
-                }),
+                body: JSON.stringify(newAvatarLink),
                 headers: this._headers
             }
         );

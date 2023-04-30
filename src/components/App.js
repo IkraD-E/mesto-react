@@ -2,11 +2,11 @@ import React from "react";
 import Header from './Header'
 import Main from './Main'
 import Footer from './Footer'
-import PopupWithForm from './PopupWithForm'
-import PopupAddPlaceFrom from './popups/PopupAddPlaceFrom'
-import PopupChangeAvatarForm from './popups/PopupChangeAvatarForm'
-import PopupChangeProfileForm from './popups/PopupChangeProfileForm'
-import PopupDeleteImageFrom from "./popups/PopupDeleteImageFrom";
+
+import EditProfilePopup from "./popups/EditProfilePopup";
+import EditAvatarPopup from "./popups/EditAvatarPopup";
+import AddPlacePopup from "./popups/AddPlacePopup";
+import DeleteImagePopup from "./popups/DeleteImagePopup";
 import ImagePopup from './ImagePopup'
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import { CardContext } from "../context/CardContext";
@@ -71,7 +71,26 @@ function App() {
       .then((userData) => {
         setUserData(userData);
       })
-      
+      .then(() => {
+        closeAllPopups();
+      })
+      .catch(res => console.log(`Ошибка: ${res.status}`));
+  }
+
+  function handleUpdateAvatar(link) {
+    api.handleChangeAvatar(link)
+      .then((userData) => {
+        setUserData(userData);
+      })
+      .then(() => {
+        closeAllPopups();
+      })
+      .catch(res => console.log(`Ошибка: ${res.status}`));
+  }
+
+  function handleAddPlaceSubmit(newCard) {
+    api.addNewPlaceToServer(newCard)
+      .then((newCard) => setCards([newCard, ...cardsList]))
       .then(() => {
         closeAllPopups();
       })
@@ -100,30 +119,22 @@ function App() {
             onCardDeleteClick={handleCardDelete}
           />
           <Footer/>
-          <PopupWithForm 
-            title="Редактировать профиль" 
+          <EditProfilePopup
             isOpen={isEditProfilePopupOpen} 
             onClose={closeAllPopups}
-          >
-              <PopupChangeProfileForm onUpdateUser={handleUpdateUser}/>
-          </PopupWithForm>
-          <PopupWithForm 
-            title="Новое место" 
-            isOpen={isAddPlacePopupOpen} 
-            onClose={closeAllPopups}>
-              <PopupAddPlaceFrom/>
-          </PopupWithForm>
-          <PopupWithForm 
-            title="Обновить аватар" 
+            onSubmit={handleUpdateUser}
+          />
+          <EditAvatarPopup 
             isOpen={isEditAvatarPopupOpen} 
-            onClose={closeAllPopups}>
-              <PopupChangeAvatarForm/>
-          </PopupWithForm>
-          <PopupWithForm 
-            title="Вы уверены?" 
-          >
-            <PopupDeleteImageFrom/>
-          </PopupWithForm>
+            onClose={closeAllPopups}
+            onSubmit={handleUpdateAvatar}
+          />
+          <AddPlacePopup 
+            isOpen={isAddPlacePopupOpen} 
+            onClose={closeAllPopups}
+            onAddPlace={handleAddPlaceSubmit}
+          />
+          <DeleteImagePopup/>
           <ImagePopup 
             card={selectedCard} 
             onClose={closeAllPopups}
