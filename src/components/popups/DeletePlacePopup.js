@@ -1,14 +1,14 @@
 import PopupWithForm from '../PopupWithForm'
-import DeleteImagePopupFrom from '../popupsForms/DeleteImagePopupFrom';
+import DeletePlacePopupFrom from '../popupsForms/DeletePlacePopupFrom';
 
-export default function DeleteImagePopup({isOpen, onClose, onSubmit}) {
+export default function DeletePlacePopup({isOpen, onClose, onSubmit, card}) {
     return (
         <PopupWithForm 
           isOpen={isOpen} 
           onClose={onClose}
           title="Вы уверены?" 
         >
-          <DeleteImagePopupFrom/>
+          <DeletePlacePopupFrom card={card} onSubmit={onSubmit}/>
         </PopupWithForm>
     )
 }

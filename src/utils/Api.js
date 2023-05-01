@@ -94,7 +94,6 @@ class Api{
     }
 
     handleChangeAvatar(newAvatarLink) {
-        console.log(newAvatarLink);
         return this._request(
             `${this._link}/users/me/avatar`, 
             {
