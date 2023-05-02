@@ -1,14 +1,19 @@
 import PopupWithForm from '../PopupWithForm'
-import DeletePlacePopupFrom from '../popupsForms/DeletePlacePopupFrom';
 
-export default function DeletePlacePopup({isOpen, onClose, onSubmit, card}) {
-    return (
-        <PopupWithForm 
-          isOpen={isOpen} 
-          onClose={onClose}
-          title="Вы уверены?" 
-        >
-          <DeletePlacePopupFrom card={card} onSubmit={onSubmit}/>
-        </PopupWithForm>
-    )
+export default function DeletePlacePopup({isOpen, onClose, onDeletePlace, card}) {
+  function handleSubmit(e) {
+    e.preventDefault();
+    onDeletePlace(card);
+  }
+  return (
+      <PopupWithForm 
+        isOpen={isOpen} 
+        onClose={onClose}
+        title="Вы уверены?"
+        name="delete-image"
+        onSubmit={handleSubmit}
+        buttonText="Да"
+      >
+      </PopupWithForm>
+  )
 }

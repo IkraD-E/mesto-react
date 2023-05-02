@@ -40,7 +40,7 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
-  const [DeletePlacePopupOpen, setIsDeletePlacePopupOpen] = React.useState(false);
+  const [isDeletePlacePopupOpen, setIsDeletePlacePopupOpen] = React.useState(false);
   function handleDeletePlaceClick(link) {
     setIsDeletePlacePopupOpen(true);
     setSelectedCardData(link);
@@ -76,7 +76,7 @@ function App() {
   function handleCardDelete(card) {
     api.deleteCardFromServer(card._id)
       .then(() => {
-        setCards((state) => state.filter((c) => { return !(c._id === card._id)}));
+        setCards((state) => state.filter((c) => c._id !== card._id));
       })
       .then(() => {
         closeAllPopups();
@@ -136,12 +136,13 @@ function App() {
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen} 
             onClose={closeAllPopups}
-            onSubmit={handleUpdateUser}
+            onUpdateUser={handleUpdateUser}
+            
           />
           <EditAvatarPopup 
             isOpen={isEditAvatarPopupOpen} 
             onClose={closeAllPopups}
-            onSubmit={handleUpdateAvatar}
+            onUpdateAvatar={handleUpdateAvatar}
           />
           <AddPlacePopup 
             isOpen={isAddPlacePopupOpen} 
@@ -149,9 +150,9 @@ function App() {
             onAddPlace={handleAddPlaceSubmit}
           />
           <DeletePlacePopup
-            isOpen={DeletePlacePopupOpen} 
+            isOpen={isDeletePlacePopupOpen} 
             onClose={closeAllPopups}
-            onSubmit={handleCardDelete}
+            onDeletePlace={handleCardDelete}
             card={selectedCard}
           />
           <ImagePopup 

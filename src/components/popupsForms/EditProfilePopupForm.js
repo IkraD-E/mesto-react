@@ -1,35 +1,6 @@
-import React from "react";
-import { CurrentUserContext } from "../../context/CurrentUserContext";
-
-export default function EditProfilePopupForm(props) {
-    const currentUser = React.useContext(CurrentUserContext);
-    React.useEffect(() => {
-        if (currentUser.name) {
-            setUserName(currentUser.name);
-            setDescription(currentUser.about);
-        }
-    }, [currentUser]);
-
-    const [userName, setUserName] = React.useState(" ");
-    function handleChangeName(e) {
-        setUserName(e.target.value);
-    }
-
-    const [userDescription, setDescription] = React.useState(" ");
-    function handleChangeDescription(e) {
-        setDescription(e.target.value);
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        props.onUpdateUser({
-          name: userName,
-          about: userDescription,
-        });
-    } 
-    
+export default function EditProfilePopupForm({userName, userDescription, handleChangeName, handleChangeDescription}) {
     return (
-        <form className="popup__form" name='form__change-profile' onSubmit={handleSubmit}>
+        <>
             <input 
                 required 
                 minLength="2" 
@@ -56,9 +27,6 @@ export default function EditProfilePopupForm(props) {
                 onChange={handleChangeDescription}
             />
             <span className="popup__error info-error"></span>
-            <button className="popup__button" type="submit">
-                Сохранить
-            </button>
-        </form>
+        </>
     )
 }
