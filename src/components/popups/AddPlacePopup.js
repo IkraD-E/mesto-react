@@ -4,6 +4,11 @@ import React from "react";
 
 export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
     const [cardName, setName] = React.useState("");
+    React.useEffect(() => {
+        setName("");
+        setUrl("");
+    }, [isOpen]);
+    
     function handleChangeName(e) {
         setName(e.target.value)
     };

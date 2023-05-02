@@ -4,6 +4,10 @@ import React from "react";
 
 export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
     const imageRef = React.useRef();
+    React.useEffect(() => {
+      imageRef.current.value = "";
+    }, [isOpen]);
+
     function handleSubmit(e) {
         e.preventDefault();
         onUpdateAvatar({
