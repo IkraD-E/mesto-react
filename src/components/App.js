@@ -9,7 +9,6 @@ import AddPlacePopup from "./popups/AddPlacePopup";
 import DeletePlacePopup from "./popups/DeletePlacePopup";
 import ImagePopup from './ImagePopup'
 import { CurrentUserContext } from "../context/CurrentUserContext";
-import { CardContext } from "../context/CardContext";
 import { api } from '../utils/Api'
 
 function App() {
@@ -120,7 +119,6 @@ function App() {
   
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <CardContext.Provider value={cardsList}>
       <div className="body">
         <div className="page">
           <Header/>
@@ -131,6 +129,7 @@ function App() {
             onCardClick={handleCardClick}
             onCardLikeClick={handleCardLike}
             onCardDeleteClick={handleDeletePlaceClick}
+            cardsList={cardsList}
           />
           <Footer/>
           <EditProfilePopup
@@ -162,7 +161,6 @@ function App() {
           />
         </div>
       </div>
-      </CardContext.Provider>
     </CurrentUserContext.Provider>
   );
 }
