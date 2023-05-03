@@ -1,4 +1,4 @@
-export default function EditProfilePopupForm({userName, userDescription, handleChangeName, handleChangeDescription}) {
+export default function EditProfilePopupInput({userName, userDescription, handleChangeName, handleChangeDescription}) {
     return (
         <>
             <input 

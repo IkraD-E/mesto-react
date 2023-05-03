@@ -1,4 +1,4 @@
-export default function EditAvatarPopupForm({imageRef}) {
+export default function EditAvatarPopupInput({imageRef}) {
 
     return (
         <>

@@ -1,4 +1,4 @@
-export default function AddPlacePopupFrom({handleChangeName, handleChangeUrl, cardName, cardUrl}) {
+export default function AddPlacePopupInput({handleChangeName, handleChangeUrl, cardName, cardUrl}) {
     return (
         <>
             <input 

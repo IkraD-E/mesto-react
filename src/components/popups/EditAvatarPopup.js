@@ -1,5 +1,5 @@
 import PopupWithForm from '../PopupWithForm'
-import EditAvatarPopupForm from '../popupsForms/EditAvatarPopupForm';
+import EditAvatarPopupInput from '../popupsInput/EditAvatarPopupInput';
 import React from "react";
 
 export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
@@ -23,7 +23,7 @@ export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
           onSubmit={handleSubmit}
           buttonText="Сохранить" 
         >
-            <EditAvatarPopupForm imageRef={imageRef} />
+            <EditAvatarPopupInput imageRef={imageRef} />
         </PopupWithForm>
     )
 }

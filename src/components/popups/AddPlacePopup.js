@@ -1,5 +1,5 @@
 import PopupWithForm from '../PopupWithForm'
-import AddPlacePopupFrom from '../popupsForms/AddPlacePopupFrom';
+import AddPlacePopupInput from '../popupsInput/AddPlacePopupInput';
 import React from "react";
 
 export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
@@ -34,7 +34,7 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
             onSubmit={handleSubmit}
             buttonText="Создать" 
         >
-            <AddPlacePopupFrom handleChangeName={handleChangeName} handleChangeUrl={handleChangeUrl} cardName={cardName} cardUrl={cardUrl}/>
+            <AddPlacePopupInput handleChangeName={handleChangeName} handleChangeUrl={handleChangeUrl} cardName={cardName} cardUrl={cardUrl}/>
         </PopupWithForm>
     )
 }

@@ -1,5 +1,5 @@
 import PopupWithForm from '../PopupWithForm'
-import EditProfilePopupForm from '../popupsForms/EditProfilePopupForm';
+import EditProfilePopupInput from '../popupsInput/EditProfilePopupInput';
 import React from "react";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 
@@ -39,7 +39,7 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
           onSubmit={handleSubmit}
           buttonText="Сохранить"
         >
-            <EditProfilePopupForm userName={userName} userDescription={userDescription} handleChangeName={handleChangeName} handleChangeDescription={handleChangeDescription}/>
+            <EditProfilePopupInput userName={userName} userDescription={userDescription} handleChangeName={handleChangeName} handleChangeDescription={handleChangeDescription}/>
         </PopupWithForm>
     )
 }
