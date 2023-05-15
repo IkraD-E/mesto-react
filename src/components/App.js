@@ -1,19 +1,27 @@
 import React from "react";
-import Header from './Header'
-import Main from './Main'
-import Footer from './Footer'
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
 
 import EditProfilePopup from "./popups/EditProfilePopup";
 import EditAvatarPopup from "./popups/EditAvatarPopup";
 import AddPlacePopup from "./popups/AddPlacePopup";
 import DeletePlacePopup from "./popups/DeletePlacePopup";
 import ImagePopup from './ImagePopup'
+import InfoTooltip from "./popups/InfoTooltip";
 import { CurrentUserContext } from "../context/CurrentUserContext";
-import { api } from '../utils/Api'
+import { api } from '../utils/Api';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Register from "./Register"
+import Login from "./Login"
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [currentUser, setUserData] = React.useState({});
   const [cardsList, setCards] = React.useState([]);
+  const state = {
+    loggedIn: false
+  }
 
   React.useEffect(() => {
     Promise.all([api.getUserDataFromServer(), api.getCardFromServer()])
@@ -53,6 +61,11 @@ function App() {
     setSelectedCardData(link);
   }
 
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
+  function handleOpenInfoTooltipPopup() {
+    setIsInfoTooltipPopupOpen(true);
+  }
+
   function closeAllPopups() {
     setIsAddPlacePopupOpen(false);
     setIsAvatarPopupOpen(false);
@@ -60,6 +73,7 @@ function App() {
     setSelectedCardData({name: '', link: ''});
     setIsImagePopupOpen(false)
     setIsDeletePlacePopupOpen(false);
+    setIsInfoTooltipPopupOpen(false);
   }
 
   function handleCardLike(card) {
@@ -121,22 +135,38 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
-          <Header/>
-          <Main 
-            onEditProfile={handleEditProfileClick} 
-            onAddPlace={handleAddPlaceClick} 
-            onEditAvatar={handleEditAvatarClick} 
-            onCardClick={handleCardClick}
-            onCardLikeClick={handleCardLike}
-            onCardDeleteClick={handleDeletePlaceClick}
-            cardsList={cardsList}
-          />
-          <Footer/>
-          <EditProfilePopup
+          <Header loggedIn={state.loggedIn} />
+          <BrowserRouter>
+            <Routes>
+              <Route 
+                path="/" 
+                element={<ProtectedRoute
+                  onEditProfile={handleEditProfileClick} 
+                  onAddPlace={handleAddPlaceClick} 
+                  onEditAvatar={handleEditAvatarClick} 
+                  onCardClick={handleCardClick}
+                  onCardLikeClick={handleCardLike}
+                  onCardDeleteClick={handleDeletePlaceClick}
+                  cardsList={cardsList}
+                  element={Main}
+                  loggedIn={state.loggedIn}
+                />}
+              />
+              <Route 
+                path="/signup" 
+                element={<Register loggedIn={state.loggedIn}/>} 
+              />
+              <Route 
+                path="/signin" 
+                element={<Login loggedIn={state.loggedIn}/> } 
+              />
+            </Routes>
+          </BrowserRouter>
+          {state.loggedIn && <Footer/>}
+          <EditProfilePopup 
             isOpen={isEditProfilePopupOpen} 
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
-            
           />
           <EditAvatarPopup 
             isOpen={isEditAvatarPopupOpen} 
@@ -158,6 +188,11 @@ function App() {
             isOpen={ImagePopupOpen}
             card={selectedCard} 
             onClose={closeAllPopups}
+          />
+          <InfoTooltip 
+            isOpen={isInfoTooltipPopupOpen}
+            onClose={closeAllPopups}
+            serverCallbackStatus={true}
           />
         </div>
       </div>
