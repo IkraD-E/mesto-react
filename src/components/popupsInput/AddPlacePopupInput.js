@@ -2,7 +2,8 @@ export default function AddPlacePopupInput({handleChangeName, handleChangeUrl, c
     return (
         <>
             <input 
-                required minLength="2" 
+                required 
+                minLength="2" 
                 maxLength="30" 
                 type="text" 
                 name="name" 

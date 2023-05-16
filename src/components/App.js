@@ -11,7 +11,8 @@ import ImagePopup from './ImagePopup'
 import InfoTooltip from "./popups/InfoTooltip";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import { api } from '../utils/Api';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { auth } from "../utils/Auth";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Register from "./Register"
 import Login from "./Login"
 import ProtectedRoute from "./ProtectedRoute";
@@ -19,9 +20,25 @@ import ProtectedRoute from "./ProtectedRoute";
 function App() {
   const [currentUser, setUserData] = React.useState({});
   const [cardsList, setCards] = React.useState([]);
-  const state = {
-    loggedIn: false
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const navigate = useNavigate()
+
+  function handleTokenCheck() {
+    if (localStorage.getItem('jwt')){
+      const jwt = localStorage.getItem('jwt');
+      auth.checkToken(jwt).then((res) => {
+        if (res) {
+          console.log(res);
+          setLoggedIn(true);
+          navigate("/", {replace: true})
+        }
+      });
+    }
   }
+
+  React.useEffect(() => {
+    handleTokenCheck();
+  }, [])
 
   React.useEffect(() => {
     Promise.all([api.getUserDataFromServer(), api.getCardFromServer()])
@@ -65,6 +82,12 @@ function App() {
   function handleOpenInfoTooltipPopup() {
     setIsInfoTooltipPopupOpen(true);
   }
+
+  const [serverCallbackStatus, setServerCallbackStatus] = React.useState(false);
+  function handleSetServerCallbackStatus(res) {
+    setServerCallbackStatus(res.ok);
+  }
+
 
   function closeAllPopups() {
     setIsAddPlacePopupOpen(false);
@@ -130,13 +153,43 @@ function App() {
       })
       .catch(res => console.log(`Ошибка: ${res.status}`));
   }
+
+  function handleRegisterSubmit(email, password) {
+    auth.addNewUserToServer(email, password)
+      .then((res) =>{
+        handleSetServerCallbackStatus(res);
+        handleOpenInfoTooltipPopup();
+      })
+      .catch(res => {
+        handleSetServerCallbackStatus(res);
+        handleOpenInfoTooltipPopup();
+        console.log(`Ошибка: ${res.status}`);
+      });
+  }
+
+  function handleLogginSubmit(email, password) {
+    auth.handleUserAuthorization(email, password)
+      .then((res => res.json()))
+      .then((data) =>{
+        if (data.token){
+          localStorage.setItem('jwt', data.token);
+          console.log("data.token");
+          console.log(data.token);
+          return data;
+        }
+      })
+      .catch(res => {
+        handleSetServerCallbackStatus(res);
+        handleOpenInfoTooltipPopup();
+        console.log(`Ошибка: ${res.status}`);
+      });
+  }
   
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
-          <Header loggedIn={state.loggedIn} />
-          <BrowserRouter>
+          <Header loggedIn={loggedIn}/>
             <Routes>
               <Route 
                 path="/" 
@@ -149,20 +202,19 @@ function App() {
                   onCardDeleteClick={handleDeletePlaceClick}
                   cardsList={cardsList}
                   element={Main}
-                  loggedIn={state.loggedIn}
+                  loggedIn={loggedIn}
                 />}
               />
               <Route 
                 path="/signup" 
-                element={<Register loggedIn={state.loggedIn}/>} 
+                element={<Register onRegisterSubmit={handleRegisterSubmit} loggedIn={loggedIn}/>} 
               />
               <Route 
                 path="/signin" 
-                element={<Login loggedIn={state.loggedIn}/> } 
+                element={<Login onLoggedInSubmit={handleLogginSubmit} loggedIn={loggedIn}/> } 
               />
             </Routes>
-          </BrowserRouter>
-          {state.loggedIn && <Footer/>}
+          {loggedIn && <Footer/>}
           <EditProfilePopup 
             isOpen={isEditProfilePopupOpen} 
             onClose={closeAllPopups}
@@ -192,7 +244,7 @@ function App() {
           <InfoTooltip 
             isOpen={isInfoTooltipPopupOpen}
             onClose={closeAllPopups}
-            serverCallbackStatus={true}
+            serverCallbackStatus={serverCallbackStatus}
           />
         </div>
       </div>

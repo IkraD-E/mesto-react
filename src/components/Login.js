@@ -1,18 +1,56 @@
-function Login() {
+import React from "react";
+
+function Login({onLoggedInSubmit}) {
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      console.log(userEmail, userPassword);
+      onLoggedInSubmit(
+        userEmail, userPassword
+      );
+    }
+    
+    const [userEmail, setUserEmail] = React.useState(" ");
+    function handleChangeEmail(e) {
+        setUserEmail(e.target.value);
+    }
+  
+    const [userPassword, setUserPassword] = React.useState(" ");
+    function handleChangeUserPassword(e) {
+      setUserPassword(e.target.value);
+    }
+  
     return (
         <main className="content">
           <section className="login">
             <h1 className="login__header">Вход</h1>
-            <form className="login__form">
+            <form className="login__form" onSubmit={handleSubmit}>
                 <input 
-                    className="login__input"
+                    required 
+                    minLength="2" 
+                    maxLength="30" 
+                    type="text" 
+                    id="email"
+                    className="login__input login__input_type_email"
                     placeholder="Email"
+                    onChange={handleChangeEmail}
                 />
                 <input 
-                    className="login__input"
+                    required 
+                    minLength="2" 
+                    maxLength="30" 
+                    type="password" 
+                    id="password"
+                    className="login__input login__input_type_password"
                     placeholder="Пароль" 
+                    onChange={handleChangeUserPassword}
                 />
-                <button className="login__submit" type="button" >Войти</button>
+                <button 
+                    className="login__submit" 
+                    type="submit"
+                >
+                    Войти
+                </button>
             </form>
           </section>
   
