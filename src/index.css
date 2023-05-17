@@ -14,6 +14,12 @@
 
 @import url(./blocks/header/__link/header__link.css);
 
+@import url(./blocks/header/__menu/header__menu.css);
+
+@import url(./blocks/header/__email/header__email.css);
+
+@import url(./blocks/header/__button/header__button.css);
+
 /* Content */
 
 @import url(./blocks/content/content.css);
@@ -97,6 +103,14 @@
 @import url(./blocks/register/__input/register__input.css);
 
 @import url(./blocks/register/__submit/register__submit.css);
+
+@import url(./blocks/register/__link/register__link.css);
+
+@import url(./blocks/register/__afterword/register__afterword.css);
+
+@import url(./blocks/register/__text/register__text.css);
+
+@import url(./blocks/register/__link/register__link.css);
 
 /* Elements */
 

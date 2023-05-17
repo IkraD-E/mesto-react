@@ -21,15 +21,20 @@ function App() {
   const [currentUser, setUserData] = React.useState({});
   const [cardsList, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const [userEmail, setUserEmail] = React.useState("");
+  function handleSetUserEmail(email) {
+    setUserEmail(email)
+  }
 
   function handleTokenCheck() {
     if (localStorage.getItem('jwt')){
       const jwt = localStorage.getItem('jwt');
       auth.checkToken(jwt).then((res) => {
         if (res) {
-          console.log(res);
           setLoggedIn(true);
+          handleSetUserEmail(res.data.email)
           navigate("/", {replace: true})
         }
       });
@@ -167,14 +172,12 @@ function App() {
       });
   }
 
-  function handleLogginSubmit(email, password) {
+  function handleLogInSubmit(email, password) {
     auth.handleUserAuthorization(email, password)
       .then((res => res.json()))
       .then((data) =>{
         if (data.token){
           localStorage.setItem('jwt', data.token);
-          console.log("data.token");
-          console.log(data.token);
           return data;
         }
       })
@@ -184,12 +187,17 @@ function App() {
         console.log(`Ошибка: ${res.status}`);
       });
   }
+
+  function handleSignOut() {
+    localStorage.removeItem('jwt');
+    navigate('/signin');
+  }
   
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
-          <Header loggedIn={loggedIn}/>
+          <Header loggedIn={loggedIn} handleSignOut={handleSignOut} email={userEmail}/>
             <Routes>
               <Route 
                 path="/" 
@@ -211,7 +219,7 @@ function App() {
               />
               <Route 
                 path="/signin" 
-                element={<Login onLoggedInSubmit={handleLogginSubmit} loggedIn={loggedIn}/> } 
+                element={<Login onLoggedInSubmit={handleLogInSubmit} loggedIn={loggedIn}/> } 
               />
             </Routes>
           {loggedIn && <Footer/>}

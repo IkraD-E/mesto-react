@@ -1,10 +1,10 @@
-.header__link {
+.header__button {
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
     cursor: pointer;
     text-decoration: none;
-    color: #FFFFFF;
+    color: #A9A9A9;
 
     max-height: 22px;
     text-align: right;
@@ -14,6 +14,6 @@
     transition: opacity .8s ease-in-out;
 }
 
-.header__link:hover {
+.header__button:hover {
     opacity: .6;
 }

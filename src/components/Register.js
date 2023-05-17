@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Register({onRegisterSubmit}) {
   function handleSubmit(e) {
@@ -53,6 +54,12 @@ function Register({onRegisterSubmit}) {
           >
             Регистрация
           </button>
+          <div className="register__afterword">
+            <p className="register__text">Уже зарегистрированы?&nbsp;</p>
+            <Link className="register__link" to={"/signin"}>
+              Войти
+            </Link>
+          </div>
         </form>
       </section>
     </main>

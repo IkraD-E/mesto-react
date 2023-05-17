@@ -13,7 +13,7 @@ class Auth{
 
     _checkResponse(res) {
         if (res.ok) {
-            return res
+            return res.json()
         }
             return Promise.reject(res)
     }
@@ -51,8 +51,6 @@ class Auth{
 
     //Аутентификация пользователя на сервере
     handleUserAuthorization(email, password) {
-        console.log("Autho");
-        console.log(email, password);
         return this._request(
             `${this._link}signin`, 
             {

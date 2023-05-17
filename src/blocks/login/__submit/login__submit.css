@@ -8,4 +8,10 @@
     min-height: 50px;
     max-width: 358px;
     width: 100%;
+    cursor: pointer;
+    transition: opacity .5s ease-in-out;
+}
+
+.login__submit:hover {
+    opacity: 0.85;
 }
