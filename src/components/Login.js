@@ -4,7 +4,6 @@ function Login({onLoggedInSubmit}) {
 
     function handleSubmit(e) {
       e.preventDefault();
-      console.log(userEmail, userPassword);
       onLoggedInSubmit(
         userEmail, userPassword
       );

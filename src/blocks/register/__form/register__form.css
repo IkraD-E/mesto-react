@@ -5,3 +5,9 @@
     flex-direction: column;
     align-items: center;
 }
+
+@media screen and (max-width: 970px) {
+    .register__form {
+        margin-top: 40px;
+    }
+}

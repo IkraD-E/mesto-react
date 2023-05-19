@@ -20,3 +20,13 @@
 .register__input:first-of-type {
     margin-bottom: 30px;
 }
+
+@media screen and (max-width: 970px) {
+    .register__input {
+        margin: 0 30px 173px;
+        max-width: 260px;
+        font-size: 14px;
+        line-height: 17px;
+        max-height: 17px;
+    }
+}

@@ -7,15 +7,16 @@ import EditProfilePopup from "./popups/EditProfilePopup";
 import EditAvatarPopup from "./popups/EditAvatarPopup";
 import AddPlacePopup from "./popups/AddPlacePopup";
 import DeletePlacePopup from "./popups/DeletePlacePopup";
-import ImagePopup from './ImagePopup'
+import ImagePopup from './ImagePopup';
 import InfoTooltip from "./popups/InfoTooltip";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import { api } from '../utils/Api';
 import { auth } from "../utils/Auth";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Register from "./Register"
-import Login from "./Login"
+import Register from "./Register";
+import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
+import MobileMenu from "./MobileMenu";
 
 function App() {
   const [currentUser, setUserData] = React.useState({});
@@ -25,19 +26,22 @@ function App() {
 
   const [userEmail, setUserEmail] = React.useState("");
   function handleSetUserEmail(email) {
-    setUserEmail(email)
+    setUserEmail(email);
   }
 
   function handleTokenCheck() {
     if (localStorage.getItem('jwt')){
       const jwt = localStorage.getItem('jwt');
-      auth.checkToken(jwt).then((res) => {
-        if (res) {
-          setLoggedIn(true);
-          handleSetUserEmail(res.data.email)
-          navigate("/", {replace: true})
-        }
-      });
+      auth.checkToken(jwt)
+        .then( res => res.json())
+        .then( res => {
+          const response = res;
+          if (response) {
+            setLoggedIn(true);
+            handleSetUserEmail(response.data.email);
+            navigate("/", {replace: true});
+          }
+        });
     }
   }
 
@@ -93,13 +97,18 @@ function App() {
     setServerCallbackStatus(res.ok);
   }
 
+  const [isHeaderMobileMenuOpen, setIsHeaderMobileMenuOpen] = React.useState(false);
+
+  function tuggleHeaderMobileMenu() {
+    setIsHeaderMobileMenuOpen(!isHeaderMobileMenuOpen)
+  }
 
   function closeAllPopups() {
     setIsAddPlacePopupOpen(false);
     setIsAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setSelectedCardData({name: '', link: ''});
-    setIsImagePopupOpen(false)
+    setIsImagePopupOpen(false);
     setIsDeletePlacePopupOpen(false);
     setIsInfoTooltipPopupOpen(false);
   }
@@ -128,7 +137,7 @@ function App() {
   function handleUpdateUser(data) {
     api.setUserInfo(data)
       .then(() => {
-        return api.getUserDataFromServer()
+        return api.getUserDataFromServer();
       })
       .then((userData) => {
         setUserData(userData);
@@ -178,6 +187,9 @@ function App() {
       .then((data) =>{
         if (data.token){
           localStorage.setItem('jwt', data.token);
+          setLoggedIn(true);
+          navigate("/", {replace: true});
+          setIsHeaderMobileMenuOpen(false);
           return data;
         }
       })
@@ -190,6 +202,7 @@ function App() {
 
   function handleSignOut() {
     localStorage.removeItem('jwt');
+    setLoggedIn(false);
     navigate('/signin');
   }
   
@@ -197,31 +210,43 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
-          <Header loggedIn={loggedIn} handleSignOut={handleSignOut} email={userEmail}/>
-            <Routes>
-              <Route 
-                path="/" 
-                element={<ProtectedRoute
-                  onEditProfile={handleEditProfileClick} 
-                  onAddPlace={handleAddPlaceClick} 
-                  onEditAvatar={handleEditAvatarClick} 
-                  onCardClick={handleCardClick}
-                  onCardLikeClick={handleCardLike}
-                  onCardDeleteClick={handleDeletePlaceClick}
-                  cardsList={cardsList}
-                  element={Main}
-                  loggedIn={loggedIn}
-                />}
-              />
-              <Route 
-                path="/signup" 
-                element={<Register onRegisterSubmit={handleRegisterSubmit} loggedIn={loggedIn}/>} 
-              />
-              <Route 
-                path="/signin" 
-                element={<Login onLoggedInSubmit={handleLogInSubmit} loggedIn={loggedIn}/> } 
-              />
-            </Routes>
+          <MobileMenu 
+            loggedIn={loggedIn} 
+            handleSignOut={handleSignOut} 
+            email={userEmail} 
+            isHeaderMobileMenuOpen={isHeaderMobileMenuOpen}
+          />
+          <Header 
+            loggedIn={loggedIn} 
+            handleSignOut={handleSignOut} 
+            email={userEmail} 
+            isHeaderMobileMenuOpen={isHeaderMobileMenuOpen} 
+            onHeaderMenuButton={tuggleHeaderMobileMenu}
+          />
+          <Routes>
+            <Route 
+              path="/" 
+              element={<ProtectedRoute
+                onEditProfile={handleEditProfileClick} 
+                onAddPlace={handleAddPlaceClick} 
+                onEditAvatar={handleEditAvatarClick} 
+                onCardClick={handleCardClick}
+                onCardLikeClick={handleCardLike}
+                onCardDeleteClick={handleDeletePlaceClick}
+                cardsList={cardsList}
+                element={Main}
+                loggedIn={loggedIn}
+              />}
+            />
+            <Route 
+              path="/signup" 
+              element={<Register onRegisterSubmit={handleRegisterSubmit} loggedIn={loggedIn}/>} 
+            />
+            <Route 
+              path="/signin" 
+              element={<Login onLoggedInSubmit={handleLogInSubmit} loggedIn={loggedIn}/> } 
+            />
+          </Routes>
           {loggedIn && <Footer/>}
           <EditProfilePopup 
             isOpen={isEditProfilePopupOpen} 

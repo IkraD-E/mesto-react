@@ -1,4 +1,4 @@
-const thisYear = new Date().getFullYear()
+const thisYear = new Date().getFullYear();
 
 export default function Footer() {
     return (

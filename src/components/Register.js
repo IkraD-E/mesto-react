@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 function Register({onRegisterSubmit}) {
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(userEmail, userPassword);
     onRegisterSubmit(
       userEmail, userPassword
     );
@@ -52,7 +51,7 @@ function Register({onRegisterSubmit}) {
             className="register__submit" 
             type="submit"
           >
-            Регистрация
+            Зарегистрироваться
           </button>
           <div className="register__afterword">
             <p className="register__text">Уже зарегистрированы?&nbsp;</p>
