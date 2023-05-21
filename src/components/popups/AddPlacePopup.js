@@ -5,7 +5,7 @@ import React from "react";
 
 export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
     const cardName = useForm("");
-    const cardUrl = useForm("")
+    const cardUrl = useForm("");
     React.useEffect(() => {
         cardName.setValues("");
         cardUrl.setValues("");
@@ -27,7 +27,12 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
             onSubmit={handleSubmit}
             buttonText="Создать" 
         >
-            <AddPlacePopupInput handleChangeName={cardName.handleChange} handleChangeUrl={cardUrl.handleChange} cardName={cardName.values} cardUrl={cardUrl.values}/>
+            <AddPlacePopupInput 
+                handleChangeName={cardName.handleChange} 
+                cardName={cardName.values} 
+                handleChangeUrl={cardUrl.handleChange} 
+                cardUrl={cardUrl.values}
+            />
         </PopupWithForm>
     )
 }

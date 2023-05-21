@@ -1,4 +1,7 @@
+import { useFormAndValidation } from "../../hooks/useFormAndValidation";
+
 export default function EditAvatarPopupInput({imageRef}) {
+    // const {values, handleChange, errors, isValid, setValues, resetForm} = useFormAndValidation();
 
     return (
         <>
@@ -12,7 +15,7 @@ export default function EditAvatarPopupInput({imageRef}) {
                 defaultValue=""
                 ref={imageRef}
             />
-            <span className="popup__error avatar-source-error"></span>
+            <span className={`popup__error avatar-source-error`}></span>
         </>
     )
 }

@@ -35,7 +35,6 @@ class Auth{
 
     //Добавление пользователя на сервер
     addNewUserToServer(email, password) {
-        console.log(email, password, this._headers);
         return this._request(
             `${this._link}signup`, 
             {

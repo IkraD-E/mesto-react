@@ -1,4 +1,4 @@
-.register__input {
+.auth__input {
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
@@ -17,12 +17,12 @@
     background: transparent;
 }
 
-.register__input:first-of-type {
+.auth__input:first-of-type {
     margin-bottom: 30px;
 }
 
 @media screen and (max-width: 970px) {
-    .register__input {
+    .auth__input {
         margin: 0 30px 173px;
         max-width: 260px;
         font-size: 14px;

@@ -14,6 +14,7 @@ export default function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
           avatar: imageRef.current.value
         });
     }
+    
     return (
         <PopupWithForm 
           title="Обновить аватар" 

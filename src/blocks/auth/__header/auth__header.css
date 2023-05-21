@@ -1,4 +1,4 @@
-.login__header {
+.auth__header {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 900;
@@ -13,7 +13,7 @@
 }
 
 @media screen and (max-width: 970px) {
-    .login__header {
+    .auth__header {
         font-size: 20px;
         line-height: 24px;
         max-height: 24px;

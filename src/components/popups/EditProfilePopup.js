@@ -1,32 +1,27 @@
 import PopupWithForm from '../PopupWithForm'
 import EditProfilePopupInput from '../popupsInput/EditProfilePopupInput';
 import React from "react";
+import { useForm } from '../../hooks/useForm';
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 
 export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
     const currentUser = React.useContext(CurrentUserContext);
     React.useEffect(() => {
         if (currentUser.name) {
-            setUserName(currentUser.name);
-            setDescription(currentUser.about);
+            userName.setValues(currentUser.name);
+            userDescription.setValues(currentUser.about);
         }
     }, [currentUser, isOpen]);
 
-    const [userName, setUserName] = React.useState(" ");
-    function handleChangeName(e) {
-        setUserName(e.target.value);
-    }
+    const userName = useForm("");
+    const userDescription = useForm("")
 
-    const [userDescription, setDescription] = React.useState(" ");
-    function handleChangeDescription(e) {
-        setDescription(e.target.value);
-    }
 
     function handleSubmit(e) {
         e.preventDefault();
         onUpdateUser({
-          name: userName,
-          about: userDescription,
+          name: userName.values,
+          about: userDescription.values,
         });
     } 
     
@@ -39,7 +34,12 @@ export default function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
           onSubmit={handleSubmit}
           buttonText="Сохранить"
         >
-            <EditProfilePopupInput userName={userName} userDescription={userDescription} handleChangeName={handleChangeName} handleChangeDescription={handleChangeDescription}/>
+            <EditProfilePopupInput 
+                userName={userName.values} 
+                handleChangeName={userName.handleChange} 
+                userDescription={userDescription.values} 
+                handleChangeDescription={userDescription.handleChange}
+            />
         </PopupWithForm>
     )
 }

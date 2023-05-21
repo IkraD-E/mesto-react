@@ -13,8 +13,7 @@ import { CurrentUserContext } from "../context/CurrentUserContext";
 import { api } from '../utils/Api';
 import { auth } from "../utils/Auth";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Register from "./Register";
-import Login from "./Login";
+import AuthForm from "./AuthForm";
 import ProtectedRoute from "./ProtectedRoute";
 import MobileMenu from "./MobileMenu";
 
@@ -191,6 +190,7 @@ function App() {
           setLoggedIn(true);
           navigate("/", {replace: true});
           setIsHeaderMobileMenuOpen(false);
+          handleSetUserEmail(email);
           return data;
         }
       })
@@ -240,12 +240,12 @@ function App() {
               />}
             />
             <Route 
-              path="/signup" 
-              element={<Register onRegisterSubmit={handleRegisterSubmit} loggedIn={loggedIn}/>} 
+              path="/signin" 
+              element={<AuthForm onSubmit={handleLogInSubmit} formName="Вход" btnText="Войти"/>} 
             />
             <Route 
-              path="/signin" 
-              element={<Login onLoggedInSubmit={handleLogInSubmit} loggedIn={loggedIn}/> } 
+              path="/signup" 
+              element={<AuthForm onSubmit={handleRegisterSubmit} formName="Регистрация" btnText="Зарегистрироваться"/> } 
             />
           </Routes>
           {loggedIn && (

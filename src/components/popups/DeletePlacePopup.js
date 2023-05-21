@@ -5,6 +5,7 @@ export default function DeletePlacePopup({isOpen, onClose, onDeletePlace, card})
     e.preventDefault();
     onDeletePlace(card);
   }
+  
   return (
       <PopupWithForm 
         isOpen={isOpen} 
