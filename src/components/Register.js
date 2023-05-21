@@ -35,6 +35,7 @@ function Register({onRegisterSubmit}) {
             id="email"
             className="register__input"
             placeholder="Email"
+            value={userEmail}
             onChange={handleChangeEmail}
           />
           <input 
@@ -45,6 +46,7 @@ function Register({onRegisterSubmit}) {
             id="password"
             className="register__input"
             placeholder="Пароль" 
+            value={userPassword}
             onChange={handleChangeUserPassword}
           />
           <button 

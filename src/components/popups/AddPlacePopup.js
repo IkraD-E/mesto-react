@@ -1,28 +1,21 @@
 import PopupWithForm from '../PopupWithForm'
 import AddPlacePopupInput from '../popupsInput/AddPlacePopupInput';
+import { useForm } from '../../hooks/useForm';
 import React from "react";
 
 export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
-    const [cardName, setName] = React.useState("");
+    const cardName = useForm("");
+    const cardUrl = useForm("")
     React.useEffect(() => {
-        setName("");
-        setUrl("");
+        cardName.setValues("");
+        cardUrl.setValues("");
     }, [isOpen]);
     
-    function handleChangeName(e) {
-        setName(e.target.value)
-    };
-
-    const [cardUrl, setUrl] = React.useState("");
-    function handleChangeUrl(e) {
-        setUrl(e.target.value)
-    };
-
     function handleSubmit(e) {
         e.preventDefault();
         onAddPlace({
-          name: cardName,
-          link: cardUrl,
+          name: cardName.values,
+          link: cardUrl.values,
         });
     };
     return (
@@ -34,7 +27,7 @@ export default function AddPlacePopup({isOpen, onClose, onAddPlace}) {
             onSubmit={handleSubmit}
             buttonText="Создать" 
         >
-            <AddPlacePopupInput handleChangeName={handleChangeName} handleChangeUrl={handleChangeUrl} cardName={cardName} cardUrl={cardUrl}/>
+            <AddPlacePopupInput handleChangeName={cardName.handleChange} handleChangeUrl={cardUrl.handleChange} cardName={cardName.values} cardUrl={cardUrl.values}/>
         </PopupWithForm>
     )
 }

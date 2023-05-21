@@ -41,7 +41,8 @@ function App() {
             handleSetUserEmail(response.data.email);
             navigate("/", {replace: true});
           }
-        });
+        })
+        .catch(res => console.log(`Ошибка при проверке токена jwt: ${res.status}`));
     }
   }
 
@@ -55,7 +56,7 @@ function App() {
           setUserData(userData);
           setCards(cards);
     })
-      .catch(res => console.log(`Ошибка: ${res.status}`));
+      .catch(res => console.log(`Ошибка при получении данных о пользователе и карточках: ${res.status}`));
   }, []);
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -120,7 +121,7 @@ function App() {
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
       })
-      .catch(res => console.log(`Ошибка: ${res.status}`));
+      .catch(res => console.log(`Ошибка при добавлении лайка: ${res.status}`));
   }
 
   function handleCardDelete(card) {
@@ -131,7 +132,7 @@ function App() {
       .then(() => {
         closeAllPopups();
       })
-      .catch(res => console.log(`Ошибка: ${res.status}`));
+      .catch(res => console.log(`Ошибка удаления карточки с сервера: ${res.status}`));
   }
 
   function handleUpdateUser(data) {
@@ -145,7 +146,7 @@ function App() {
       .then(() => {
         closeAllPopups();
       })
-      .catch(res => console.log(`Ошибка: ${res.status}`));
+      .catch(res => console.log(`Ошибка изменения данных о пользователе: ${res.status}`));
   }
 
   function handleUpdateAvatar(link) {
@@ -156,7 +157,7 @@ function App() {
       .then(() => {
         closeAllPopups();
       })
-      .catch(res => console.log(`Ошибка: ${res.status}`));
+      .catch(res => console.log(`Ошибка изменения аватара: ${res.status}`));
   }
 
   function handleAddPlaceSubmit(newCard) {
@@ -165,7 +166,7 @@ function App() {
       .then(() => {
         closeAllPopups();
       })
-      .catch(res => console.log(`Ошибка: ${res.status}`));
+      .catch(res => console.log(`Ошибка добавления нового места: ${res.status}`));
   }
 
   function handleRegisterSubmit(email, password) {
@@ -177,7 +178,7 @@ function App() {
       .catch(res => {
         handleSetServerCallbackStatus(res);
         handleOpenInfoTooltipPopup();
-        console.log(`Ошибка: ${res.status}`);
+        console.log(`Ошибка добавления нового пользователя на сервер: ${res.status}`);
       });
   }
 
@@ -196,7 +197,7 @@ function App() {
       .catch(res => {
         handleSetServerCallbackStatus(res);
         handleOpenInfoTooltipPopup();
-        console.log(`Ошибка: ${res.status}`);
+        console.log(`Ошибка входа пользователя: ${res.status}`);
       });
   }
 
@@ -247,33 +248,37 @@ function App() {
               element={<Login onLoggedInSubmit={handleLogInSubmit} loggedIn={loggedIn}/> } 
             />
           </Routes>
-          {loggedIn && <Footer/>}
-          <EditProfilePopup 
-            isOpen={isEditProfilePopupOpen} 
-            onClose={closeAllPopups}
-            onUpdateUser={handleUpdateUser}
-          />
-          <EditAvatarPopup 
-            isOpen={isEditAvatarPopupOpen} 
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
-          />
-          <AddPlacePopup 
-            isOpen={isAddPlacePopupOpen} 
-            onClose={closeAllPopups}
-            onAddPlace={handleAddPlaceSubmit}
-          />
-          <DeletePlacePopup
-            isOpen={isDeletePlacePopupOpen} 
-            onClose={closeAllPopups}
-            onDeletePlace={handleCardDelete}
-            card={selectedCard}
-          />
-          <ImagePopup 
-            isOpen={ImagePopupOpen}
-            card={selectedCard} 
-            onClose={closeAllPopups}
-          />
+          {loggedIn && (
+          <>
+            <Footer/>
+            <EditProfilePopup 
+              isOpen={isEditProfilePopupOpen} 
+              onClose={closeAllPopups}
+              onUpdateUser={handleUpdateUser}
+            />
+            <EditAvatarPopup 
+              isOpen={isEditAvatarPopupOpen} 
+              onClose={closeAllPopups}
+              onUpdateAvatar={handleUpdateAvatar}
+            />
+            <AddPlacePopup 
+              isOpen={isAddPlacePopupOpen} 
+              onClose={closeAllPopups}
+              onAddPlace={handleAddPlaceSubmit}
+            />
+            <DeletePlacePopup
+              isOpen={isDeletePlacePopupOpen} 
+              onClose={closeAllPopups}
+              onDeletePlace={handleCardDelete}
+              card={selectedCard}
+            />
+            <ImagePopup 
+              isOpen={ImagePopupOpen}
+              card={selectedCard} 
+              onClose={closeAllPopups}
+            />
+          </>
+          )}
           <InfoTooltip 
             isOpen={isInfoTooltipPopupOpen}
             onClose={closeAllPopups}

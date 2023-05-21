@@ -32,6 +32,7 @@ function Login({onLoggedInSubmit}) {
                     id="email"
                     className="login__input login__input_type_email"
                     placeholder="Email"
+                    value={userEmail}
                     onChange={handleChangeEmail}
                 />
                 <input 
@@ -42,6 +43,7 @@ function Login({onLoggedInSubmit}) {
                     id="password"
                     className="login__input login__input_type_password"
                     placeholder="Пароль" 
+                    value={userPassword}
                     onChange={handleChangeUserPassword}
                 />
                 <button 
